@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
+import { Menu, X } from "lucide-react";
 import { href } from "react-router-dom";
 
 
@@ -14,6 +15,7 @@ const navItems =[
 export const Navbar = () => {
 
     const [isscrolled, setIsScrolled] = useState(false);
+    const [ismenuOpen, setIsMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -38,24 +40,36 @@ export const Navbar = () => {
 
 
             {/* desktop navbar */}
-            <div>
-                <div className="hidden md:flex space-x-8">
+            <div className="hidden md:flex space-x-8">
                 {navItems.map((item, key) => (
                     <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300">
                          {item.name} </a>
-                ))}
+                ))};
             </div>
-
 
             {/* mobile navbar */}
-             <div className="hidden md:flex space-x-8">
+            <button 
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            className="md:hidden p-2 text-foreground z-50"
+            aria-label={ismenuOpen ? "Close menu" : "Open menu"}
+            >
+                {ismenuOpen ? <X size={24} /> : <Menu size={24} />}
+
+            </button>
+
+
+            <div className={cn("fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
+                "transition-all duration-300 md:hidden",
+                ismenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+            )}>
+                <div className="flex flex-col space-y-8 text-xl">
                 {navItems.map((item, key) => (
-                    <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300">
+                    <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                    onClick={() => setIsMenuOpen(false)}>
                          {item.name} </a>
                 ))}
+                </div>
             </div>
-            </div>
-
         </div>
     </nav>;
 };
