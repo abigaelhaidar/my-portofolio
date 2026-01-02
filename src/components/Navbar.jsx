@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { cn } from "../lib/utils";
 import { Menu, X } from "lucide-react";
-import { href } from "react-router-dom";
 
 
 const navItems =[
@@ -44,7 +43,7 @@ export const Navbar = () => {
                 {navItems.map((item, key) => (
                     <a key={key} href={item.href} className="text-foreground/80 hover:text-primary transition-colors duration-300">
                          {item.name} </a>
-                ))};
+                ))}
             </div>
 
             {/* mobile navbar */}
